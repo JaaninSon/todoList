@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState();
 
-  console.log(todo, todos);
+  const inputRef = useRef();
 
   return (
     <>
       <input
+        ref={inputRef}
         width="300"
         height="50"
         onChange={(e) => {
@@ -18,6 +19,7 @@ function App() {
       <button
         onClick={() => {
           setTodos([...todos, todo]);
+          inputRef.current.value = "";
         }}
       >
         추가
