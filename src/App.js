@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -16,12 +16,12 @@ function App() {
           setTodo(e.target.value);
         }}
       />
+
       <button
         onClick={() => {
           setTodos([...todos, todo]);
-          inputRef.current.value = "";
-        }}
-      >
+          inputRef.current.value = '';
+        }}>
         추가
       </button>
       <p>
@@ -34,8 +34,7 @@ function App() {
                   const newState = [...todos];
                   delete newState[index];
                   setTodos(newState.filter((todo) => todo));
-                }}
-              >
+                }}>
                 삭제
               </button>
             </>
