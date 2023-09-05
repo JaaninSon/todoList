@@ -1,9 +1,29 @@
 import { useTodo } from './hooks/useTodo';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
-  const { inputRef, todos, handleAdd, handleUpdate, handleDelete, handleUpdateMode, handleChange } =
-    useTodo();
+  const {
+    inputRef,
+    todos,
+    handleAdd,
+    handleUpdate,
+    handleDelete,
+    handleUpdateMode,
+    handleChange,
+    setTodos
+  } = useTodo();
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000')
+      .then((res) => {
+        setTodos(res.data);
+      })
+      .catch(() => {
+        console.log('error');
+      });
+  }, []);
 
   return (
     <>

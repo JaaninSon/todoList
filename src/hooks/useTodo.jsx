@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useRef, useState } from 'react';
 
 export const useTodo = () => {
@@ -9,8 +10,15 @@ export const useTodo = () => {
   const updateInputRef = useRef();
 
   const handleAdd = () => {
-    setTodos([...todos, todo]);
     inputRef.current.value = '';
+    axios
+      .post('http://localhost:8000', {
+        title: todo
+      })
+      .then((res) => {
+        setTodos(res.data);
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleUpdate = (index) => {
@@ -36,7 +44,7 @@ export const useTodo = () => {
     return isUpdateMode === index ? (
       <input ref={updateInputRef} width="300" height="50" defaultValue={item} />
     ) : (
-      <p>{item}</p>
+      <p>{item.title}</p>
     );
   };
 
@@ -44,6 +52,7 @@ export const useTodo = () => {
 
   return {
     todos,
+    setTodos,
     inputRef,
     handleAdd,
     handleUpdate,
