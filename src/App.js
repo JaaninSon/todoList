@@ -1,6 +1,6 @@
 import { useTodo } from './hooks/useTodo';
 import { Fragment, useEffect } from 'react';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 function App() {
   const {
@@ -20,8 +20,13 @@ function App() {
       .then((res) => {
         setTodos(res.data);
       })
-      .catch(() => {
-        console.log('error');
+      .catch((e) => {
+        if (isAxiosError(e)) {
+          if (e.response.status === 404) throw new Error('404 Not Found!');
+        } else {
+          // Unknown error
+          console.log('unknown', e);
+        }
       });
   }, []);
 
